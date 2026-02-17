@@ -59,7 +59,7 @@ def buy_airtime(config: RunnableConfig, phone_number, network, amount):
     }
     try:
         response = requests.post(api_url, json=payload, headers=headers)
-        data = response.json
+        data = response.json()
         if response.status_code == 200 and data.get("status") == "success":
             ref = data.get("reference_id", "Unknown")
             return f"Success! ₦{amount} airtime purchased for {phone_number} on {network}. Reference: {ref}."
