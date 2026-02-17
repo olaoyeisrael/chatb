@@ -19,11 +19,12 @@ def read_item(item_id: int, q: str = None):
 class ChatRequest(BaseModel):
     session_id: str
     message: str
+    token: str
 @app.post("/chat")
 def chat(request: ChatRequest):
     response = agent.invoke(
             {"messages": [{"role": "user", "content": request.message}]},
-            config={"configurable": {"thread_id": request.session_id}}
+            config={"configurable": {"thread_id": request.session_id, "user_token": request.token}}
         )
     final_message = response["messages"][-1].content
     return {"Response": final_message}
